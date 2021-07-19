@@ -1,7 +1,8 @@
 #main {
   background-color: #201d1e;
-  margin: 20px;
-  width: 700px;
+  margin: 20px auto;
+  max-width: 50%;
+  text-align: center;
 }
 
 .pagetext {
@@ -10,12 +11,8 @@
 }
 
 h1 {
-  font-size: 40px;
+  font-size: 45px;
   margin-bottom: 0;
-}
-
-#title-subtext {
-  font-size: 34px;
 }
 
 ::selection {
@@ -28,7 +25,7 @@ h1 {
 
 .social-media-icon {
   padding: 5px;
-  padding-top: 30px;
+  padding-top: 20px;
 }
 
 #content-links {
