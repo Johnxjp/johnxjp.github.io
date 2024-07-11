@@ -1,18 +1,38 @@
-#main {
+body {
   background-color: #201d1e;
-  margin: 20px auto;
-  max-width: 50%;
+  display: flex;
   text-align: center;
+  justify-content: center;
+  color: white;
+  font-family: "dosis", sans-serif;
+  justify-content: center;
 }
 
 .pagetext {
-  color: white;
-  font-family: "dosis", sans-serif;
+  width: 30vw;
+  margin-top: 10%;
+  padding-bottom: 20px;
+  border: white;
+  border-radius: 1em;
+  border-style: solid;
+  box-shadow: 5px 5px white;
+}
+
+.pagetext:hover {
+  border-top: #29b6f6;
+  border-left: #29b6f6;
+  border-radius: 1em;
+  border-style: solid;
 }
 
 h1 {
   font-size: 45px;
   margin-bottom: 0;
+}
+
+a {
+  text-decoration: underline;
+  color: white
 }
 
 ::selection {
@@ -30,4 +50,9 @@ h1 {
 
 #content-links {
   color: white;
+}
+
+li.quotes {
+  width: 30vw;
+  margin: 30px;
 }
