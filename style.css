@@ -56,3 +56,10 @@ li.quotes {
   width: 30vw;
   margin: 30px;
 }
+
+li.log-entry {
+  display: flex; 
+  width: 50vw; 
+  gap: 20px; 
+  margin-bottom: 20px;
+}
