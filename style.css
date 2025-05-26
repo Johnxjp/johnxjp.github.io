@@ -1,16 +1,24 @@
+.figtree-normal {
+  font-family: "Figtree", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
 body {
   background-color: #201d1e;
   display: flex;
   text-align: center;
   justify-content: center;
   color: white;
-  font-family: "dosis", sans-serif;
+  font-family: "Figtree", sans-serif;
   justify-content: center;
+  margin-top: 50px;
 }
 
 .pagetext {
   width: 30vw;
-  margin-top: 10%;
+  margin-top: 50px;
   padding-bottom: 20px;
   border: white;
   border-radius: 1em;
@@ -19,8 +27,6 @@ body {
 }
 
 .pagetext:hover {
-  border-top: #29b6f6;
-  border-left: #29b6f6;
   border-radius: 1em;
   border-style: solid;
 }
