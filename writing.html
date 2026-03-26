@@ -49,10 +49,6 @@
 					Hermes'
 					approach to compaction: how, where and when.
 				</p>
-				<p style="max-width: 700px; margin-bottom: 10px;">
-					(If you're reading this I'm assuming you know what context window and context engineering is)
-				</p>
-
 				<h2 style="font-size: large;">The How</h2>
 				<p style="max-width: 700px; margin-bottom: 10px;">
 					Compaction compresses the agent's current context into a smaller number of tokens. This is usually
@@ -70,7 +66,7 @@
 					was curious about how Hermes implements compaction. Thankfully, Hermes is neatly documented and
 					<a
 						href="https://github.com/NousResearch/hermes-agent/blob/e4033b2baf681946bc36b3c02546866a28c7aae9/agent/context_compressor.py#L546">Nous
-						tell us exactly how they do</a> it in plain English:
+						tells us exactly how they do</a> it in plain English:
 				</p>
 				<pre><code>Compress conversation messages by summarizing middle turns.
 
@@ -228,7 +224,10 @@ if not _merge_summary_into_tail:
 				<p style="max-width: 700px; margin-bottom: 10px;">
 					There's also a final check to ensure there are no orphaned tool calls or results as provider APIs
 					also
-					typically reject this.
+					typically reject this. 
+					<br><br>
+					That covers the core compression algorithm. But compaction doesn't happen in
+					isolation — there's meaningful work before and after it runs.
 				</p>
 
 				<h2 style="font-size: large;">Pre and Post Compaction Processing</h2>
@@ -286,7 +285,7 @@ self.flush_memories(messages, min_turns=0)</code></pre>
 					that
 					this is included here because the agent has a separate TODO store that it can access and tasks are
 					also
-					written into the compaction summary. I only imagine this is done to lower the odds the agent goes
+					written into the compaction summary. I can only imagine this is done to lower the odds the agent goes
 					off-road.
 				</p>
 				<pre><code>    todo_snapshot = self._todo_store.format_for_injection()
@@ -337,7 +336,7 @@ self.flush_memories(messages, min_turns=0)</code></pre>
 					The pre-flight compaction is an interesting edge case. This tries to handle the case where the
 					conversation history already exceeds a threshold number of tokens that should trigger compaction and
 					is
-					checked after a new user message request. I wasn't quite sure why this was needed but then
+					checked after a new user message arrives. I wasn't quite sure why this was needed but then
 					understood
 					that a user can manually change the model partway through the conversation and in fact choose a
 					model

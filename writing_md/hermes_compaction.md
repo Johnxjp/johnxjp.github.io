@@ -1,6 +1,5 @@
 ## How Compaction Works in Hermes Agent
 March 26, 2026 
-Hermes Agent Commit: **f83c27e**
 
 [Nous Research](https://nousresearch.com/) recently released [Hermes Agent](https://github.com/NousResearch/hermes-agent/tree/main) — an open-source personal agent similar to OpenClaw. One of the aspects I was most curious about was context management and in particular compaction given that effective context management is arguably the most critical requirement for maximising agent performance in long-running contexts. In this post, I document Hermes’ approach to compaction: how, where and when. 
 
