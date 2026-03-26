@@ -78,3 +78,27 @@ a.link-out {
 a.link-out:hover {
   color: white;
 }
+
+code {
+  font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace;
+  background-color: #2d2a2b;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 13px;
+}
+
+pre {
+  background-color: #2d2a2b;
+  border-radius: 6px;
+  padding: 16px;
+  overflow-x: auto;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+pre code {
+  font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace;
+  color: #e0e0e0;
+  padding: 0;
+  background: none;
+}
