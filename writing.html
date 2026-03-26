@@ -7,6 +7,9 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap"
 		rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+	<script>hljs.highlightAll();</script>
 	<meta charset="utf-8" />
 	<title>John Lingi (collected quotes)</title>
 </head>
@@ -37,8 +40,8 @@
 			<div>
 				<p style="margin: 0; font-size: small; color: #666;">March 2026</p>
 			</div>
-			<div>
-				<h1 style="font-size: x-large; margin-top: 0;">How Compaction Works in Hermes Agent</h1>
+			<div id="hermes-compaction">
+				<h1 style="font-size: x-large; margin-top: 0;"><a href="#hermes-compaction">How Compaction Works in Hermes Agent</a></h1>
 				<p style="max-width: 700px; margin-bottom: 10px;">
 					<a href="https://nousresearch.com/">Nous Research</a> recently released
 					<a href="https://github.com/NousResearch/hermes-agent/tree/main">Hermes Agent</a> — an open-source
@@ -104,7 +107,7 @@ up so the API never receives mismatched IDs.</code></pre>
 						also seem to do the same arguing that old tool calls aren't
 						valuable.</a>
 				</p>
-				<pre><code>result = [m.copy() for m in messages]
+				<pre><code class="language-python">result = [m.copy() for m in messages]
 prune_boundary = len(result) - protect_tail_count
 for i in range(prune_boundary):
     msg = result[i]
@@ -180,7 +183,7 @@ for i in range(prune_boundary):
 					Finally, the output summary is returned and appended to a prefix that signals to the
 					model a compaction event happened.
 				</p>
-				<pre><code>SUMMARY_PREFIX = (
+				<pre><code class="language-python">SUMMARY_PREFIX = (
     "[CONTEXT COMPACTION] Earlier turns in this conversation were compacted "
     "to save context space. The summary below describes work that was "
     "already completed, and the current session state may still reflect "
@@ -199,7 +202,7 @@ for i in range(prune_boundary):
 					based
 					on whichever would preserve this pattern.
 				</p>
-				<pre><code>last_head_role = messages[compress_start - 1].get("role", "user") if compress_start &gt; 0 else "user"
+				<pre><code class="language-python">last_head_role = messages[compress_start - 1].get("role", "user") if compress_start &gt; 0 else "user"
 first_tail_role = messages[compress_end].get("role", "user") if compress_end &lt; n_messages else "user"
 # Pick a role that avoids consecutive same-role with both neighbors.
 # Priority: avoid colliding with head (already committed), then tail.
@@ -224,7 +227,7 @@ if not _merge_summary_into_tail:
 				<p style="max-width: 700px; margin-bottom: 10px;">
 					There's also a final check to ensure there are no orphaned tool calls or results as provider APIs
 					also
-					typically reject this. 
+					typically reject this.
 					<br><br>
 					That covers the core compression algorithm. But compaction doesn't happen in
 					isolation — there's meaningful work before and after it runs.
@@ -249,13 +252,13 @@ if not _merge_summary_into_tail:
 						href="https://github.com/NousResearch/hermes-agent/blob/36af1f3baf3f2b089ca3bd5c3b9405bdaf9689d6/run_agent.py#L4656">extract
 						any relevant memories</a> before they are possibly lost.
 				</p>
-				<pre><code> # Pre-compression memory flush: let the model save memories before they're lost
+				<pre><code class="language-python"># Pre-compression memory flush: let the model save memories before they're lost
 self.flush_memories(messages, min_turns=0)</code></pre>
 				<p style="max-width: 700px; margin-bottom: 10px;">
 					This method actually sends a background user message to nudge an LLM to save any memories worth
 					remembering
 				</p>
-				<pre><code>flush_content = (
+				<pre><code class="language-python">flush_content = (
     "[System: The session is being compressed. "
     "Save anything worth remembering — prioritize user preferences, "
     "corrections, and recurring patterns over task-specific details.]"
@@ -285,10 +288,11 @@ self.flush_memories(messages, min_turns=0)</code></pre>
 					that
 					this is included here because the agent has a separate TODO store that it can access and tasks are
 					also
-					written into the compaction summary. I can only imagine this is done to lower the odds the agent goes
+					written into the compaction summary. I can only imagine this is done to lower the odds the agent
+					goes
 					off-road.
 				</p>
-				<pre><code>    todo_snapshot = self._todo_store.format_for_injection()
+				<pre><code class="language-python">    todo_snapshot = self._todo_store.format_for_injection()
     if todo_snapshot:
         compressed.append({"role": "user", "content": todo_snapshot})</code></pre>
 				<p style="max-width: 700px; margin-bottom: 10px;">
@@ -301,9 +305,9 @@ self.flush_memories(messages, min_turns=0)</code></pre>
 					also
 					invalidated so that the new system prompt is forced into use instead.
 				</p>
-				<pre><code>    self._invalidate_system_prompt()
-    new_system_prompt = self._build_system_prompt(system_message)
-    self._cached_system_prompt = new_system_prompt</code></pre>
+				<pre><code class="language-python">self._invalidate_system_prompt()
+new_system_prompt = self._build_system_prompt(system_message)
+self._cached_system_prompt = new_system_prompt</code></pre>
 				<p style="max-width: 700px; margin-bottom: 10px;">
 					3. Session records are updated to reflect a compaction event has occurred and counters are reset.
 				</p>
@@ -344,7 +348,7 @@ self.flush_memories(messages, min_turns=0)</code></pre>
 					current model's context window size. They also handle the case where multiple compactions might be
 					necessary to reduce the current token size to fit a very small model.
 				</p>
-				<pre><code>if (
+				<pre><code class="language-python">if (
     self.compression_enabled
     and len(messages) &gt; self.context_compressor.protect_first_n
                         + self.context_compressor.protect_last_n + 1
@@ -388,9 +392,9 @@ self.flush_memories(messages, min_turns=0)</code></pre>
 			<div>
 				<p style="margin: 0; font-size: small; color: #666;">April 2025</p>
 			</div>
-			<div>
+			<div id="on-starting-and-finishing">
 				<h1 style="font-size: x-large; margin-top: 0;"><a
-						href="https://johnlingi.substack.com/p/on-starting-and-finishing">On Starting and
+						href="#on-starting-and-finishing">On Starting and
 						Finishing</a> </h1>
 				<p style="max-width: 700px; margin-bottom: 10px;">
 					I’ve struggled countless times to take the first step on a new path. Whether that was a new
