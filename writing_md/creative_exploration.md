@@ -1,4 +1,4 @@
-# Exploring Interfaces for Creative Exploration
+# Interaction Modes for Creative Exploration
 
 Ideas often begin as faint sensations: a single image, a thought, a desire to express a feeling. Miyazaki says “you can start with a vague yearning…a certain sentiment, a slight sliver of emotion — whatever it is”. Following that, the real work begins to give shape to the idea and that often starts with unfettered exploration. Our tools shouldn’t stand in the way of this; they should allow us to frictionlessly explore the creative space at the speed of imagination — to rapidly generate, edit, tweak, curate, remix, cut, layer and whatever else is needed to drag an idea from dreamland into the real world. 
 
